@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
+using PlatformService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using PlatformService.Models;
 
 namespace PlatformService.Data
 {
