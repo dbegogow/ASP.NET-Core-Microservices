@@ -1,7 +1,9 @@
 using System;
+using CommandsService.Data;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,10 @@ namespace CommandsService
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseInMemoryDatabase("InMem"));
+
+            services.AddScoped<ICommandRepo, CommandRepo>();
 
             services.AddControllers();
 
