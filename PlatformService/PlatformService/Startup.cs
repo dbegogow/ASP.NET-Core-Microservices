@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using PlatformService.AsyncDataServices;
 using Microsoft.Extensions.Configuration;
 using PlatformService.SyncDataService.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,7 @@ namespace PlatformService
             services.AddScoped<IPlatformRepo, PlatformRepo>();
 
             services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
             services.AddControllers();
 
