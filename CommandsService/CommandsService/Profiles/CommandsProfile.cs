@@ -11,6 +11,9 @@ namespace CommandsService.Profiles
             CreateMap<Platform, PlatformReadDto>();
             CreateMap<CommandCreateDto, Command>();
             CreateMap<Command, CommandReadDto>();
+            CreateMap<PlatformPublishedDto, Platform>()
+                .ForMember(p => p.ExternalId, options =>
+                    options.MapFrom(src => src.Id));
         }
     }
 }

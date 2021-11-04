@@ -32,6 +32,9 @@ namespace CommandsService.Data
         public bool PlatformExits(int platformId)
             => this._context.Platforms.Any(p => p.Id == platformId);
 
+        public bool ExternalPlatformExists(int externalPlatformId)
+            => this._context.Platforms.Any(p => p.ExternalId == externalPlatformId);
+
         public IEnumerable<Command> GetCommandsForPlatform(int platformId)
             => this._context.Commands
                 .Where(c => c.PlatformId == platformId)
