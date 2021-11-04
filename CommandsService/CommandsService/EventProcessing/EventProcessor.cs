@@ -52,30 +52,28 @@ namespace CommandsService.EventProcessing
 
         private void AddPlatform(string platformPublishedMessage)
         {
-            using (var scope = this._scopeFactory.CreateScope())
+            using var scope = this._scopeFactory.CreateScope();
+            var repo = scope.ServiceProvider.GetRequiredService<ICommandRepo>();
+
+            var platformPublishedDto = JsonSerializer.Deserialize<PlatformPublishedDto>(platformPublishedMessage);
+
+            try
             {
-                var repo = scope.ServiceProvider.GetRequiredService<ICommandRepo>();
+                var platform = this._mapper.Map<Platform>(platformPublishedDto);
 
-                var platformPublishedDto = JsonSerializer.Deserialize<PlatformPublishedDto>(platformPublishedMessage);
-
-                try
+                if (!repo.ExternalPlatformExists(platform.ExternalId))
                 {
-                    var platform = this._mapper.Map<Platform>(platformPublishedDto);
-
-                    if (!repo.ExternalPlatformExists(platform.ExternalId))
-                    {
-                        repo.CreatePlatform(platform);
-                        repo.SaveChanges();
-                    }
-                    else
-                    {
-                        Console.WriteLine("--> Platform already exists...");
-                    }
+                    repo.CreatePlatform(platform);
+                    repo.SaveChanges();
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine($"--> Could not add Platform to DB {ex.Message}");
+                    Console.WriteLine("--> Platform already exists...");
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"--> Could not add Platform to DB {ex.Message}");
             }
         }
     }

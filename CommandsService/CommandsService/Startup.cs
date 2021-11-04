@@ -3,8 +3,10 @@ using CommandsService.Data;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using CommandsService.EventProcessing;
+using CommandsService.AsyncDataServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +27,10 @@ namespace CommandsService
             services.AddScoped<ICommandRepo, CommandRepo>();
 
             services.AddControllers();
+
+            services.AddHostedService<MessageBusSubscriber>();
+
+            services.AddSingleton<IEventProcessor, EventProcessor>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
