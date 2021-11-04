@@ -21,12 +21,12 @@ namespace CommandsService.EventProcessing
 
         public void ProcessEvent(string message)
         {
-            var eventype = DetermineEvent(message);
+            var eventType = DetermineEvent(message);
 
-            switch (eventype)
+            switch (eventType)
             {
                 case EventType.PlatformPublished:
-                    //TODO
+                    this.AddPlatform(message);
                     break;
                 default:
                     break;
@@ -65,6 +65,8 @@ namespace CommandsService.EventProcessing
                 {
                     repo.CreatePlatform(platform);
                     repo.SaveChanges();
+
+                    Console.WriteLine("--> Platform added!");
                 }
                 else
                 {
