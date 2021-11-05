@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CommandsService.EventProcessing;
 using CommandsService.AsyncDataServices;
+using CommandsService.SyncDataServices.Grpc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,6 +34,8 @@ namespace CommandsService
             services.AddSingleton<IEventProcessor, EventProcessor>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IPlatformDataClient, PlatformDataClient>();
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandsService", Version = "v1" }));
