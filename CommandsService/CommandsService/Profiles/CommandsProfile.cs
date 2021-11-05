@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PlatfromService;
 using CommandsService.DTOs;
 using CommandsService.Models;
 
@@ -13,7 +14,14 @@ namespace CommandsService.Profiles
             CreateMap<Command, CommandReadDto>();
             CreateMap<PlatformPublishedDto, Platform>()
                 .ForMember(p => p.ExternalId, options =>
-                    options.MapFrom(src => src.Id));
+                    options.MapFrom(pp => pp.Id));
+            CreateMap<GrpcPlatformModel, Platform>()
+                .ForMember(p => p.ExternalId, options =>
+                    options.MapFrom(gp => gp.PlatformId))
+                .ForMember(p => p.Name, options =>
+                    options.MapFrom(gp => gp.Name))
+                .ForMember(p => p.Commands, options =>
+                    options.Ignore());
         }
     }
 }
