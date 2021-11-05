@@ -7,8 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CommandsService.EventProcessing;
 using CommandsService.AsyncDataServices;
-using CommandsService.SyncDataServices.Grpc;
 using Microsoft.Extensions.Configuration;
+using CommandsService.SyncDataServices.Grpc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CommandsService
@@ -59,6 +59,8 @@ namespace CommandsService
                 {
                     endpoints.MapControllers();
                 });
+
+            PrepDb.PrepPopulation(app);
         }
     }
 }
